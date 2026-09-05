@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: enterprise-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secure_password_123
+      POSTGRES_DB: enterprise
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - enterprise-network
+
+  erp-connector:
+    build: ./apps/erp-connector
+    container_name: erp-connector
+    environment:
+      DATABASE_URL: postgresql://admin:secure_password_123@postgres:5432/enterprise
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - enterprise-network
+
+  ai-expert:
+    build: ./services/ai-database-expert
+    container_name: ai-expert
+    environment:
+      DATABASE_URL: postgresql://admin:secure_password_123@postgres:5432/enterprise
+      OLLAMA_HOST: http://ollama:11434
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres
+      - ollama
+    networks:
+      - enterprise-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - enterprise-network
+
+  media-service:
+    build: ./services/media-service
+    container_name: media-service
+    environment:
+      TMDB_API_KEY: ${TMDB_API_KEY}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+    ports:
+      - "8002:8002"
+    networks:
+      - enterprise-network
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    environment:
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: admin
+      N8N_BASIC_AUTH_PASSWORD: password
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - enterprise-network
+
+networks:
+  enterprise-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  ollama_data:
+  n8n_data:
