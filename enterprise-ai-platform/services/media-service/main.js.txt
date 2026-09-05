@@ -1,0 +1,3 @@
+enterprise-ai-platform/services/media-service/main.js
+enterprise-ai-platform/services/media-service/Dockerfile
+enterprise-ai-platform/services/media-service/package.json

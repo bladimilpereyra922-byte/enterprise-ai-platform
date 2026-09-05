@@ -1,0 +1,3 @@
+enterprise-ai-platform/apps/web-dashboard/app/page.tsx
+enterprise-ai-platform/apps/web-dashboard/package.json
+enterprise-ai-platform/apps/web-dashboard/Dockerfile

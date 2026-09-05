@@ -1,0 +1,3 @@
+enterprise-ai-platform/apps/erp-connector/main.py
+enterprise-ai-platform/apps/erp-connector/Dockerfile
+enterprise-ai-platform/apps/erp-connector/requirements.txt
