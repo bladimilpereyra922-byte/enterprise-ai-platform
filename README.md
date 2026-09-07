@@ -1,9 +1,7 @@
 # 🏢 Plataforma de IA Empresarial
 
 ## 📌 Descripción
-Sistema empresarial con microservicios, inteligencia artificial, ERP y multimedia.  
-**Portafolio profesional** de Bladimil Pereyra - Systems Architect.
-
+plataforma de IA empresarial - Enterprise AI Platform - Full Stack Portfolio. Sistema empresarial con microservicios, IA, ERP y multimedia.
 ---
 
 ## 🏗️ Arquitectura
